@@ -1,0 +1,15 @@
+#!/bin/bash
+cron_file="/etc/crontab"
+cmp_file="/new_cron"
+
+if [ ! -e ${cmp_file} ]; then
+	md5sum ${cron_file} > $cmp_file
+fi
+
+if  ! md5sum -c ${cmp_file} --status
+then
+	echo "${cron_file} was modified" | mail -s root@example.com
+	md5sum ${cron_file} > ${cmp_file}
+fi
+
+# Scheduled task: crontab -e 0 0 * * * sh /home/user/04

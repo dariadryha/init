@@ -1,0 +1,5 @@
+#!/bin/bash
+crontab -l > my_cronfile
+echo "0 4 * * 0 apt-get -y update && apt-get -y upgrade >> /var/log/update_script.log" >> my_cronfile
+crontab my_cronfile
+rm -rf my_cronfile
